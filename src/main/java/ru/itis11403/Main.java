@@ -3,43 +3,76 @@ package ru.itis11403;
 import java.util.Scanner;
 
 public class Main {
-
-    private User admin = new User(Role.ADMIN, "Azaliya.pochta786@gmailcom", "Cool17[]Q");
-    private User user = new User(Role.USER, "Cool17[]Q", "UserPassword998[]");
-
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        String login = scanner.nextLine();
-        String password = scanner.nextLine();
 
         while (true) {
-            System.out.print("Введите логин или введите 'exit' для выхода: ");
+            System.out.println("Введите логин или введите exit, чтобы завершить программу");
+            String login = scanner.nextLine();
 
-            if (login.equalsIgnoreCase("exit")) {
-                System.out.println("Программа завершена, будем ждать вас! ");
+            if (login.equals("exit")) {
+                System.out.println("Программа завершена!");
                 break;
             }
 
-            System.out.print("Введите пароль: ");
+            System.out.println("Введите пароль или введите exit, чтобы завершить программу");
+            String password = scanner.nextLine();
+
+            if (password.equals("exit")) {
+                System.out.println("Программа завершена");
+                break;
+            }
 
             try {
-                Role role = Means.userCheck(login, password);
+                Role role = userCheck(login, password);
 
                 if (role != null) {
-                    Means.displayMenu(role);
-                } else {
-                    System.out.println("Неправильный логин или пароль, попробуйте еще раз!\n");
+                    menu(role);
+                    break;
                 }
-
             } catch (WrongLoginException e) {
-                System.out.println("Ошибка: " + e.getMessage());
+                System.out.println("Логин не соответсвует требованиям");
             } catch (WrongPasswordException e) {
-                System.out.println("Ошибка: " + e.getMessage());
+                System.out.println("Пароль не соответсвует требованиям");
+            } catch (WrongLoginOrPasswordException e) {
+                System.out.println("Неверный логин или пароль");
             }
 
         }
         scanner.close();
+
+    }
+
+    public static Role userCheck(String login, String password) throws WrongLoginException, WrongPasswordException, WrongLoginOrPasswordException {
+        if (!CheckUser.checkLogin(login)) {
+            throw new WrongLoginException();
+        }
+
+        if (!CheckUser.checkPassword(password)) {
+            throw new WrongPasswordException();
+        }
+
+        if (CheckUser.checkPasAndLog(login, password) == null){
+            throw new WrongLoginOrPasswordException();
+        }
+        return CheckUser.checkPasAndLog(login, password);
+    }
+
+    public static void menu(Role role) {
+        switch (role) {
+            case ADMIN:
+                System.out.println("ADMIN");
+                System.out.println("1.File");
+                System.out.println("2.Create new user");
+                System.out.println("3.Exit");
+                break;
+
+            case USER:
+                System.out.println("USER");
+                System.out.println("1.File");
+                System.out.println("2.Get play list");
+                System.out.println("3.Exit");
+                break;
+        }
     }
 }
-
-
