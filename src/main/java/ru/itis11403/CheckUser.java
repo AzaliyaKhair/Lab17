@@ -1,8 +1,5 @@
 package ru.itis11403;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 public class CheckUser {
     static User admin = new User(Role.ADMIN, "Azaliya.pochta786@gmailcom", "Cool17[]Q");
     static User user = new User(Role.USER, "Cool17[]Q", "UserPassword998[]");

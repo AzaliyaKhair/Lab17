@@ -52,7 +52,7 @@ public class Main {
             throw new WrongPasswordException();
         }
 
-        if (CheckUser.checkPasAndLog(login, password) == null){
+        if (CheckUser.checkPasAndLog(login, password) == null) {
             throw new WrongLoginOrPasswordException();
         }
         return CheckUser.checkPasAndLog(login, password);
