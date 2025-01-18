@@ -3,9 +3,10 @@ package ru.itis11403;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-class CheckUser {
-    private User admin = new User(Role.ADMIN, "Azaliya.pochta786@gmailcom", "Cool17[]Q");
-    private User user = new User(Role.USER, "Cool17[]Q", "UserPassword998[]");
+public class Means {
+    public static Role userCheck (String login, String password) throws WrongLoginException, WrongPasswordException, WrongLoginOrPasswordException {
+        return null;
+    }
 
     private boolean isValidLogin(String login) {
         if (login.length() < 20) return false;
